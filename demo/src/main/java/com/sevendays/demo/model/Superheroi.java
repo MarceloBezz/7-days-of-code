@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Superheroi {
+public class SuperHeroi {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +29,22 @@ public class Superheroi {
     private String poderes;
 
     private String origem;
+
+    public SuperHeroi(DadosSuperHeroi dados) {
+        this.nome = dados.nome();
+        this.poderes = dados.poderes();
+        this.origem = dados.origem();
+    }
+
+    public void atualizar(DadosSuperHeroi dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if (dados.poderes() != null) {
+            this.poderes = dados.poderes();
+        }
+        if (dados.origem() != null) {
+            this.origem = dados.origem();
+        }
+    }
 }
