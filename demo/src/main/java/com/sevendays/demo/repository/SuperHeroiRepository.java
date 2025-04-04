@@ -7,5 +7,6 @@ import com.sevendays.demo.model.SuperHeroi;
 public interface SuperHeroiRepository extends JpaRepository<SuperHeroi, Long>{
 
     SuperHeroi findByNomeAndOrigem(String nome, String origem);
-    
+
+    boolean existsByNome(String nome);
 }

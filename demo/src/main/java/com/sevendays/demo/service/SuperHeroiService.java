@@ -9,7 +9,6 @@ import com.sevendays.demo.model.DadosSuperHeroi;
 import com.sevendays.demo.model.SuperHeroi;
 import com.sevendays.demo.repository.SuperHeroiRepository;
 
-import jakarta.transaction.Transactional;
 
 @Service
 public class SuperHeroiService {
@@ -17,24 +16,33 @@ public class SuperHeroiService {
     @Autowired
     private SuperHeroiRepository superHeroiRepository;
 
-    public SuperHeroi pegaSuperheroi(Long id) {
-        return superHeroiRepository.findById(id).get();
+    public DadosSuperHeroi pegaSuperheroi(Long id) {
+        var superHeroi = superHeroiRepository.findById(id).get();
+        return new DadosSuperHeroi(superHeroi);
     }
 
-    public List<SuperHeroi> listarSuperherois() {
-        return superHeroiRepository.findAll();
+    public List<DadosSuperHeroi> listarSuperherois() {
+        return superHeroiRepository.findAll().stream()
+        .map(s -> new DadosSuperHeroi(s))
+        .toList();
     }
 
-    public SuperHeroi cadastrarSuperheroi(SuperHeroi superHeroi) {
-        return superHeroiRepository.save(superHeroi);
+    public SuperHeroi cadastrarSuperheroi(DadosSuperHeroi dto) throws Exception {
+        var superHeroiJaCadastrado = superHeroiRepository.existsByNome(dto.nome());
+
+        if (superHeroiJaCadastrado) {
+            throw new Exception("Super-Herói já cadastrado!");
+        }
+
+        return superHeroiRepository.save(new SuperHeroi(dto));
     }
 
-    @Transactional
-    public SuperHeroi atualizar(Long id, DadosSuperHeroi dados) {
+    public DadosSuperHeroi atualizar(Long id, DadosSuperHeroi dados) {
         SuperHeroi superheroi = superHeroiRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Super-herói não encontrado"));
         superheroi.atualizar(dados);
-        return superheroi;
+
+        return new DadosSuperHeroi(superheroi);
     }
 
     public void deletarSuperHeroi(Long id) throws Exception {
@@ -42,6 +50,7 @@ public class SuperHeroiService {
         if (!superHeroi) {
             throw new Exception("Super-herói não encontrado!");
         }
+        
         superHeroiRepository.deleteById(id);
     }
 }
