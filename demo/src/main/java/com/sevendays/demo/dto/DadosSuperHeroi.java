@@ -1,4 +1,6 @@
-package com.sevendays.demo.model;
+package com.sevendays.demo.dto;
+
+import com.sevendays.demo.model.SuperHeroi;
 
 public record DadosSuperHeroi(
     String nome,

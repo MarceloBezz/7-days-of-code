@@ -1,5 +1,8 @@
 package com.sevendays.demo.model;
 
+import com.sevendays.demo.dto.CadastroSuperHeroi;
+import com.sevendays.demo.dto.DadosSuperHeroi;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,7 +35,7 @@ public class SuperHeroi {
 
     private String descricao;
 
-    public SuperHeroi(DadosSuperHeroi dados) {
+    public SuperHeroi(CadastroSuperHeroi dados) {
         this.nome = dados.nome();
         this.poderes = dados.poderes();
         this.origem = dados.origem();

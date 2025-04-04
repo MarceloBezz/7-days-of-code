@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.sevendays.demo.model.DadosSuperHeroi;
+import com.sevendays.demo.dto.CadastroSuperHeroi;
+import com.sevendays.demo.dto.DadosSuperHeroi;
 import com.sevendays.demo.service.SuperHeroiService;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -53,12 +55,12 @@ public class SuperHeroiController {
 
     @SuppressWarnings("rawtypes")
     @PostMapping()
-    public ResponseEntity postMethodName(@RequestBody DadosSuperHeroi superHeroi, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity postMethodName(@RequestBody @Valid CadastroSuperHeroi superHeroi, UriComponentsBuilder uriBuilder) {
         try {
             var novoSuperheroi = superHeroiService.cadastrarSuperheroi(superHeroi);
             var uri = uriBuilder.path("/superheroi/{id}").buildAndExpand(novoSuperheroi.getId()).toUri();
     
-            return ResponseEntity.created(uri).body(novoSuperheroi);
+            return ResponseEntity.created(uri).body(new DadosSuperHeroi(novoSuperheroi));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

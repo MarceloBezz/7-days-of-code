@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sevendays.demo.model.DadosSuperHeroi;
+import com.sevendays.demo.dto.CadastroSuperHeroi;
+import com.sevendays.demo.dto.DadosSuperHeroi;
 import com.sevendays.demo.model.SuperHeroi;
 import com.sevendays.demo.repository.SuperHeroiRepository;
 
@@ -26,7 +27,7 @@ public class SuperHeroiService {
                 .toList();
     }
 
-    public SuperHeroi cadastrarSuperheroi(DadosSuperHeroi dto) throws Exception {
+    public SuperHeroi cadastrarSuperheroi(CadastroSuperHeroi dto) throws Exception {
         var superHeroiJaCadastrado = superHeroiRepository.existsByNome(dto.nome());
 
         if (superHeroiJaCadastrado) {
