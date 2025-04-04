@@ -9,10 +9,9 @@ import com.sevendays.demo.model.DadosSuperHeroi;
 import com.sevendays.demo.model.SuperHeroi;
 import com.sevendays.demo.repository.SuperHeroiRepository;
 
-
 @Service
 public class SuperHeroiService {
-    
+
     @Autowired
     private SuperHeroiRepository superHeroiRepository;
 
@@ -23,8 +22,8 @@ public class SuperHeroiService {
 
     public List<DadosSuperHeroi> listarSuperherois() {
         return superHeroiRepository.findAll().stream()
-        .map(s -> new DadosSuperHeroi(s))
-        .toList();
+                .map(s -> new DadosSuperHeroi(s))
+                .toList();
     }
 
     public SuperHeroi cadastrarSuperheroi(DadosSuperHeroi dto) throws Exception {
@@ -39,7 +38,7 @@ public class SuperHeroiService {
 
     public DadosSuperHeroi atualizar(Long id, DadosSuperHeroi dados) {
         SuperHeroi superheroi = superHeroiRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Super-herói não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Super-herói não encontrado"));
         superheroi.atualizar(dados);
 
         return new DadosSuperHeroi(superheroi);
@@ -50,7 +49,20 @@ public class SuperHeroiService {
         if (!superHeroi) {
             throw new Exception("Super-herói não encontrado!");
         }
-        
+
         superHeroiRepository.deleteById(id);
+    }
+
+    public List<DadosSuperHeroi> filtrarPorPoderes(String poder) {
+        var superHeroisFiltrados = superHeroiRepository.findByPoderesContainingIgnoreCase(poder);
+
+        if (superHeroisFiltrados.size() > 0) {
+            return superHeroisFiltrados
+                    .stream()
+                    .map(s -> new DadosSuperHeroi(s))
+                    .toList();
+        }
+
+        return null;
     }
 }

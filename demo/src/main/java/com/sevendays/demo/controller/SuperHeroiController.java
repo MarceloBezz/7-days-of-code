@@ -18,7 +18,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/superheroi")
@@ -87,4 +87,15 @@ public class SuperHeroiController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @SuppressWarnings("rawtypes")
+    @GetMapping("/filtro")
+    public ResponseEntity filtrarPorPoderes(@RequestParam String poder) {
+        var superHeroisFiltrados = superHeroiService.filtrarPorPoderes(poder);
+        if (superHeroisFiltrados == null) {
+            return ResponseEntity.badRequest().body("Nenhum super-herói com o poder digitado!");
+        }
+        return ResponseEntity.ok(superHeroisFiltrados);
+    }
+    
 }
