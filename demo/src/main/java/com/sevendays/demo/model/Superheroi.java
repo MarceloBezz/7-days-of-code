@@ -30,21 +30,27 @@ public class SuperHeroi {
 
     private String origem;
 
+    private String descricao;
+
     public SuperHeroi(DadosSuperHeroi dados) {
         this.nome = dados.nome();
         this.poderes = dados.poderes();
         this.origem = dados.origem();
+        this.descricao = dados.descricao();
     }
 
     public void atualizar(DadosSuperHeroi dados) {
-        if (dados.nome() != null) {
+        if (dados.nome() != null && dados.nome() != "") {
             this.nome = dados.nome();
         }
-        if (dados.poderes() != null) {
+        if (dados.poderes() != null && dados.poderes() != "") {
             this.poderes = dados.poderes();
         }
-        if (dados.origem() != null) {
+        if (dados.origem() != null && dados.origem() != "") {
             this.origem = dados.origem();
+        }
+        if(dados.descricao() != null && dados.descricao() != "") {
+            this.descricao = dados.descricao();
         }
     }
 }

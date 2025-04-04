@@ -1,6 +1,5 @@
 package com.sevendays.demo.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.sevendays.demo.model.DadosSuperHeroi;
-import com.sevendays.demo.model.SuperHeroi;
 import com.sevendays.demo.service.SuperHeroiService;
 
 import jakarta.transaction.Transactional;
@@ -29,6 +27,7 @@ public class SuperHeroiController {
     @Autowired
     private SuperHeroiService superHeroiService;
 
+    @SuppressWarnings("rawtypes")
     @GetMapping()
     public ResponseEntity listar() {
         try {
@@ -40,6 +39,7 @@ public class SuperHeroiController {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     @GetMapping("/{id}")
     public ResponseEntity pegarPorId(@PathVariable Long id) {
         try {
@@ -51,6 +51,7 @@ public class SuperHeroiController {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     @PostMapping()
     public ResponseEntity postMethodName(@RequestBody DadosSuperHeroi superHeroi, UriComponentsBuilder uriBuilder) {
         try {
@@ -63,6 +64,7 @@ public class SuperHeroiController {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity editar(@RequestBody DadosSuperHeroi superHeroi, @PathVariable Long id) {
